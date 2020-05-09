@@ -1,0 +1,121 @@
+﻿@model DB_LD2.ViewModels.ArenaEditViewModel
+@Scripts.Render("~/Scripts/PP2.js")
+
+@{
+    ViewBag.Title = "CreateMultipleArenas";
+}
+
+<h2>CreateMultipleArenas</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Adresas)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Miestas)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Miesto_ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Pavadinimas)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Talpa)
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>
+                    @Html.EditorFor(modelItem => modelItem.Adresas, new { htmlAttributes = new { @class = "form-control" } })
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => modelItem.Miestas, new { htmlAttributes = new { @class = "form-control" } })
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => modelItem.Miesto_ID, new { htmlAttributes = new { @class = "form-control" } })
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => modelItem.Pavadinimas, new { htmlAttributes = new { @class = "form-control" } })
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => modelItem.Talpa, new { htmlAttributes = new { @class = "form-control" } })
+                </td>
+            </tr>
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td>
+                    <input class="btnAdd btn btn-default" type="button" name="name" value="Add" />
+                </td>
+                <td>
+                    <input id="btnSubmit" type="button" value="Submit" class="btn btn-default" />
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+}
+
+@section scripts{
+    <script>
+
+    $(".btnAdd").click(function () {
+        var td1 = '<td>@Html.EditorFor(modelItem => modelItem.Adresas, new { htmlAttributes = new { @class = "form-control" } })</td>';
+        var td2 = '<td>@Html.EditorFor(modelItem => modelItem.Miestas, new { htmlAttributes = new { @class = "form-control" } })</td>';
+        var td3 = '<td>@Html.EditorFor(modelItem => modelItem.Miesto_ID, new { htmlAttributes = new { @class = "form-control" } })</td>';
+        var td8 = '<td>@Html.EditorFor(modelItem => modelItem.Pavadinimas, new { htmlAttributes = new { @class = "form-control" } })</td>';
+        var td9 = '<td>@Html.EditorFor(modelItem => modelItem.Talpa, new { htmlAttributes = new { @class = "form-control" } })</td>';
+        $("tbody").append('<tr>' + td1 + td2 + td3 + td8 + td9 + '</tr>');
+    });
+
+    function getAllData() {
+        var data = [];
+        $('tbody tr').each(function () {
+            var From = $(this).find('#Adresas').val();
+            var Date = $(this).find('#Miestas').val();
+            var Department = $(this).find('#Miesto_ID').val();
+            var SerialNo = $(this).find('#Pavadinimas').val();
+            var Description = $(this).find('#Talpa').val();
+            var alldata = {
+                'Adresas': From,
+                'Miestas': Date,
+                'Miesto_ID': Department,
+                'Pavadinimas': SerialNo,
+                'Talpa': Description
+            }
+            data.push(alldata);
+        });
+        console.log(data);
+        return data;
+    }
+
+    $('#btnSubmit').click(function () {
+        var data = JSON.stringify(getAllData());
+        $.ajax({
+            url: '/Arena/SaveData',
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({ 'getepassdata': data }),
+            success: function () {
+                alert("Data Added Successfully");
+            },
+            error: function () {
+                alert("Error while inserting data");
+            }
+        });
+        console.log(data);
+    });
+    </script>
+}

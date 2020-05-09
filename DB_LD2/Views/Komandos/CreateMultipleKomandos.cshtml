@@ -1,0 +1,120 @@
+﻿@model DB_LD2.ViewModels.KomandosEditViewModel
+
+@{
+    ViewBag.Title = "CreateMultipleKomandos";
+}
+
+<h2>CreateMultipleKomandos</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Valstija)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Miestas)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Komandos_Pav)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Komandos_ID)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Divizionas)
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td>
+                    @Html.EditorFor(modelItem => modelItem.Valstija, new { htmlAttributes = new { @class = "form-control" } })
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => modelItem.Miestas, new { htmlAttributes = new { @class = "form-control" } })
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => modelItem.Komandos_Pav, new { htmlAttributes = new { @class = "form-control" } })
+                </td>
+                <td>
+                    @Html.EditorFor(modelItem => modelItem.Komandos_ID, new { htmlAttributes = new { @class = "form-control" } })
+                </td>
+                <td>
+                    @Html.DropDownListFor(model => model.Divizionas, Model.Divizionai, "----------", new { @class = "form-control" })
+                </td>
+            </tr>
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td>
+                    <input class="btnAdd btn btn-default" type="button" name="name" value="Add" />
+                </td>
+                <td>
+                    <input id="btnSubmit" type="button" value="Submit" class="btn btn-default" />
+                </td>
+                <td></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+}
+@section scripts{
+    <script>
+
+        $(".btnAdd").click(function () {
+        var td1 = '<td>@Html.EditorFor(modelItem => modelItem.Valstija, new { htmlAttributes = new { @class = "form-control" } })</td>';
+        @*//var td2 = '<td>@Ajax.JavaScriptStringEncode(@Html.DropDownListFor(model => model.Komandos_ID, Model.Komandu_ID, "----------", new { @class = "form-control" }).ToHtmlString())</td>';*@
+            var td9 = document.getElementById('Divizionas').parentElement.outerHTML; //repeat
+        var td2 = '<td>@Html.EditorFor(modelItem => modelItem.Miestas, new { htmlAttributes = new { @class = "form-control" } })</td>';
+        var td3 = '<td>@Html.EditorFor(modelItem => modelItem.Komandos_Pav, new { htmlAttributes = new { @class = "form-control" } })</td>';
+        var td8 = '<td>@Html.EditorFor(modelItem => modelItem.Komandos_ID, new { htmlAttributes = new { @class = "form-control" } })</td>';
+        $("tbody").append('<tr>' + td1 + td2 + td3 + td8 + td9 +'</tr>');
+    });
+
+    function getAllData() {
+        var data = [];
+        $('tbody tr').each(function () {
+            var From = $(this).find('#Valstija').val();
+            var Date = $(this).find('#Miestas').val();
+            var Department = $(this).find('#Komandos_Pav').val();
+            var SerialNo = $(this).find('#Komandos_ID').val();
+            var Description = $(this).find('#Divizionas').val();
+            var alldata = {
+                'Valstija': From,
+                'Miestas': Date,
+                'Komandos_Pav': Department,
+                'Komandos_ID': SerialNo,
+                'Divizionas': Description
+            }
+            data.push(alldata);
+        });
+        console.log(data);
+        return data;
+    }
+
+    $('#btnSubmit').click(function () {
+        var data = JSON.stringify(getAllData());
+        $.ajax({
+            url: '/Komandos/SaveData',
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({ 'getepassdata': data }),
+            success: function () {
+                alert("Data Added Successfully");
+            },
+            error: function () {
+                alert("Error while inserting data");
+            }
+        });
+        console.log(data);
+    });
+    </script>
+}

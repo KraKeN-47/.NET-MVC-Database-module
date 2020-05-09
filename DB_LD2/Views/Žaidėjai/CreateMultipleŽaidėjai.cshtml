@@ -1,0 +1,130 @@
+﻿@model DB_LD2.ViewModels.ŽaidėjaiEditViewModel
+
+@{
+    ViewBag.Title = "CreateMultipleŽaidėjai";
+}
+
+<h2>CreateMultipleŽaidėjai</h2>
+
+@using (Html.BeginForm())
+{
+@Html.AntiForgeryToken()
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Amzius)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Komandos_ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Patirtis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Pavarde)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vardas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Zaidejo_Kodas)
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>
+                @Html.EditorFor(modelItem => modelItem.Amzius, new { htmlAttributes = new { @class = "form-control" } })
+            </td>
+            <td>
+                @*@Html.EditorFor(modelItem => modelItem.Komandos_ID, new { htmlAttributes = new { @class = "form-control" } })*@
+                @Html.DropDownListFor(model => model.Komandos_ID, Model.Komandu_ID, "----------", new { @class = "form-control" })
+            </td>
+            <td>
+                @Html.EditorFor(modelItem => modelItem.Patirtis, new { htmlAttributes = new { @class = "form-control" } })
+            </td>
+            <td>
+                @Html.EditorFor(modelItem => modelItem.Pavarde, new { htmlAttributes = new { @class = "form-control" } })
+            </td>
+            <td>
+                @Html.EditorFor(modelItem => modelItem.Vardas, new { htmlAttributes = new { @class = "form-control" } })
+            </td>
+            <td>
+                @Html.EditorFor(modelItem => modelItem.Zaidejo_Kodas, new { htmlAttributes = new { @class = "form-control" } })
+            </td>
+        </tr>
+    </tbody>
+
+    <tfoot>
+        <tr>
+            <td>
+                <input class="btnAdd btn btn-default" type="button" name="name" value="Add" />
+            </td>
+            <td>
+                <input id="btnSubmit" type="button" value="Submit" class="btn btn-default" />
+            </td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+}
+@section scripts{
+    <script>
+
+        $(".btnAdd").click(function () {
+        var td1 = '<td>@Html.EditorFor(modelItem => modelItem.Amzius, new { htmlAttributes = new { @class = "form-control" } })</td>';
+        @*//var td2 = '<td>@Ajax.JavaScriptStringEncode(@Html.DropDownListFor(model => model.Komandos_ID, Model.Komandu_ID, "----------", new { @class = "form-control" }).ToHtmlString())</td>';*@
+            var td2 = document.getElementById('Komandos_ID').parentElement.outerHTML; //repeat
+        var td3 = '<td>@Html.EditorFor(modelItem => modelItem.Patirtis, new { htmlAttributes = new { @class = "form-control" } })</td>';
+        var td8 = '<td>@Html.EditorFor(modelItem => modelItem.Pavarde, new { htmlAttributes = new { @class = "form-control" } })</td>';
+        var td9 = '<td>@Html.EditorFor(modelItem => modelItem.Vardas, new { htmlAttributes = new { @class = "form-control" } })</td>';
+        var td10 = '<td>@Html.EditorFor(modelItem => modelItem.Zaidejo_Kodas, new { htmlAttributes = new { @class = "form-control" } })</td>';
+        $("tbody").append('<tr>' + td1 + td2 + td3 + td8 + td9 + td10 +'</tr>');
+    });
+
+    function getAllData() {
+        var data = [];
+        $('tbody tr').each(function () {
+            var From = $(this).find('#Amzius').val();
+            var Date = $(this).find('#Komandos_ID').val();
+            var Department = $(this).find('#Patirtis').val();
+            var SerialNo = $(this).find('#Pavarde').val();
+            var Description = $(this).find('#Vardas').val();
+            var Zaidejo_Kodas = $(this).find('#Zaidejo_Kodas').val();
+            var alldata = {
+                'Amzius': From,
+                'Komandos_ID': Date,
+                'Patirtis': Department,
+                'Pavarde': SerialNo,
+                'Vardas': Description,
+                'Zaidejo_Kodas': Zaidejo_Kodas
+            }
+            data.push(alldata);
+        });
+        console.log(data);
+        return data;
+    }
+
+    $('#btnSubmit').click(function () {
+        var data = JSON.stringify(getAllData());
+        $.ajax({
+            url: '/Žaidėjai/SaveData',
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json; charset=utf-8',
+            data: JSON.stringify({ 'getepassdata': data }),
+            success: function () {
+                alert("Data Added Successfully");
+            },
+            error: function () {
+                alert("Error while inserting data");
+            }
+        });
+        console.log(data);
+    });
+    </script>
+}

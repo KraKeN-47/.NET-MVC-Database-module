@@ -1,0 +1,63 @@
+﻿@model IEnumerable<DB_LD2.ViewModels.ŽaidėjaiViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create Multiple Žaidėjai", "CreateMultipleŽaidėjai")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Zaidejo_Kodas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pavarde)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amzius)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Patirtis)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Vardas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Komandos_ID)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Zaidejo_Kodas)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pavarde)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amzius)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Patirtis)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vardas)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Komandos_ID)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new {  id=item.Zaidejo_Kodas  }, new { @class = "btn btn-primary action" } ) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Zaidejo_Kodas }, new { @class = "btn btn-danger action" })
+        </td>
+    </tr>
+}
+
+</table>

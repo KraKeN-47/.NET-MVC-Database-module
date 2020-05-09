@@ -1,0 +1,63 @@
+﻿@model DB_LD2.ViewModels.KomandosEditViewModel
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>View</h2>
+
+<h3>Are you sure you want to delete this team?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Komandos_ID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Komandos_ID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Komandos_Pav)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Komandos_Pav)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Miestas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Miestas)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Valstija)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Valstija)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Divizionas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Divizionas)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

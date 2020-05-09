@@ -1,0 +1,58 @@
+﻿@model IEnumerable<DB_LD2.ViewModels.ArenaViewModel>
+@Scripts.Render("~/scripts/PP2.js")
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<p>
+    @Html.ActionLink("Create New", "Create") |
+    @Html.ActionLink("Create Multiple Arenas", "CreateMultipleArenas")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Miesto_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Adresas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Talpa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pavadinimas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Miestas)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Miesto_ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adresas)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Talpa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Pavadinimas)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Miestas)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Miesto_ID }, new { @class = "btn btn-primary action" }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Miesto_ID }, new { @class = "btn btn-danger action" })
+            </td>
+        </tr>
+    }
+
+</table>

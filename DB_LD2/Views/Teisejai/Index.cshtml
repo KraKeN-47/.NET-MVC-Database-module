@@ -1,0 +1,56 @@
+﻿@model IEnumerable<DB_LD2.ViewModels.TeisejaiViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>View</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Vardas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pavarde)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Amzius)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Patirtis)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Asmens_Kodas)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Vardas)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pavarde)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Amzius)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Patirtis)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Asmens_Kodas)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Asmens_Kodas }, new { @class = "btn btn-primary action" } ) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Asmens_Kodas }, new { @class = "btn btn-danger action" } )
+        </td>
+    </tr>
+}
+
+</table>

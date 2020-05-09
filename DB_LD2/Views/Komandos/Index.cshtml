@@ -1,0 +1,56 @@
+﻿@model IEnumerable<DB_LD2.ViewModels.KomandosViewModel>
+
+@{
+    ViewBag.Title = "View";
+}
+
+<h2>View</h2>
+
+<p>
+    @Html.ActionLink("Create Multiple", "CreateMultipleKomandos")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Komandos_ID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Komandos_Pav)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Miestas)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Valstija)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Divizionas)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Komandos_ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Komandos_Pav)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Miestas)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Valstija)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Divizionas)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Komandos_ID }, new { @class = "btn btn-primary action" }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Komandos_ID },new { @class = "btn btn-danger action" })
+        </td>
+    </tr>
+}
+
+</table>
